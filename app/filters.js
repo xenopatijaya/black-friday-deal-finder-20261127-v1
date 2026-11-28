@@ -3,7 +3,7 @@
 
 import { pctOff, saved } from "./format.js";
 
-export const CATEGORIES = ["All", "Audio", "Computers", "TVs", "Wearables", "Gaming", "Kitchen", "Home", "Toys & Fashion"];
+export const CATEGORIES = ["All", "Audio", "Computers", "TVs", "Wearables", "Gaming", "Kitchen", "Home", "Toys & Fashion", "Phones"];
 export const STORES = ["All", "Amazon", "Walmart", "Best Buy", "Target"];
 export const DISCOUNTS = [
   { label: "Any discount", min: 0 },

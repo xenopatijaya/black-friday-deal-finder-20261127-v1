@@ -2,7 +2,7 @@
 //
 // The site is app/: plain static files a browser opens at app/index.html
 // (ES modules, one stylesheet, no build step, nothing fetched from the
-// network). Its deals live in app/data.js, checked twice on 27 Nov 2026.
+// network). Its deals live in app/data.js, checked twice on 28 Nov 2026.
 //
 // This program copies app/ and screenshots/ from beside this file to the
 // output directory and writes /output/dossier.json with the vendored

@@ -5,6 +5,7 @@
 import { escape, usd, pctOff, saved, checkedLabel, storeSearchUrl } from "./format.js";
 import { CHECKED_AT, SOURCES } from "./data.js";
 import { compareTable, compareLine } from "./compare.js";
+import { artTile } from "./art.js";
 
 const VERDICT = {
   newlow: ["NEW LOW", "Lowest price ever tracked"],
@@ -24,13 +25,18 @@ export function dealCard(d) {
       <span class="cat">${escape(d.cat)}</span>
       ${verdictPill(d)}
     </div>
-    <h3><a href="#/deal/${encodeURIComponent(d.id)}">${escape(d.title)}</a></h3>
-    <p class="price-row">
-      <span class="price">${usd(d.price)}</span>
-      <s class="was">${usd(d.was)}</s>
-      <span class="off">${pctOff(d)}% off</span>
-    </p>
-    <p class="save-line">You save ${usd(saved(d))}</p>
+    <div class="card-main">
+      ${artTile(d.cat)}
+      <div class="card-body">
+        <h3><a href="#/deal/${encodeURIComponent(d.id)}">${escape(d.title)}</a></h3>
+        <p class="price-row">
+          <span class="price">${usd(d.price)}</span>
+          <s class="was">${usd(d.was)}</s>
+          <span class="off">${pctOff(d)}% off</span>
+        </p>
+        <p class="save-line">You save ${usd(saved(d))}</p>
+      </div>
+    </div>
     <p class="why">${escape(d.why)}</p>
     ${compareLine(d)}
     <p class="meta">Checked ${checkedLabel(CHECKED_AT)} · Source: ${escape(d.src)}</p>
@@ -38,19 +44,42 @@ export function dealCard(d) {
   </article>`;
 }
 
+export function heroCard(d) {
+  return `<article class="card hero">
+    <div class="card-top">
+      <span class="store">${escape(d.store)}</span>
+      <span class="cat">${escape(d.cat)}</span>
+      ${verdictPill(d)}
+    </div>
+    <div class="card-main">
+      ${artTile(d.cat, true)}
+      <div class="card-body">
+        <h3><a href="#/deal/${encodeURIComponent(d.id)}">${escape(d.title)}</a></h3>
+        <p class="price-row">
+          <span class="price">${usd(d.price)}</span>
+          <s class="was">${usd(d.was)}</s>
+          <span class="off">${pctOff(d)}% off</span>
+        </p>
+        <p class="save-line big-save">You save ${usd(saved(d))}</p>
+      </div>
+    </div>
+    <p class="why">${escape(d.why)}</p>
+  </article>`;
+}
+
 export function featured(deals) {
-  const lows = deals.filter((d) => d.verdict === "newlow").slice(0, 5);
-  return `<section class="featured" aria-label="Best deals right now">
-    <h2>Lowest prices ever — right now</h2>
-    <div class="feat-grid">${lows.map(dealCard).join("")}</div>
+  const heroes = [...deals].sort((a, b) => saved(b) - saved(a)).slice(0, 3);
+  return `<section class="featured" aria-label="Biggest savings right now">
+    <h2>Biggest savings on the board</h2>
+    <div class="feat-grid">${heroes.map(heroCard).join("")}</div>
   </section>`;
 }
 
 export function listView(deals, shown, st, total) {
-  const chips = ["All", "Audio", "Computers", "TVs", "Wearables", "Gaming", "Kitchen", "Home", "Toys & Fashion"];
+  const chips = ["All", "Audio", "Computers", "TVs", "Wearables", "Gaming", "Kitchen", "Home", "Toys & Fashion", "Phones"];
   return `<section class="intro">
     <h1>Real Friday</h1>
-    <p class="tagline">Black Friday deals that are actually deals. Every price checked twice on Friday 27 November 2026 — and every discount worked out from the two prices, never typed in.</p>
+    <p class="tagline">Black Friday deals that are actually deals. Every price checked twice on Saturday 28 November 2026 — five prices from yesterday corrected, 18 new deals added.</p>
     <p class="stats"><strong>${total.n} deals</strong> · <strong>${total.lows} new lows</strong> · <strong>${total.stores} stores</strong> · <strong>${usd(total.save)} total savings</strong> if you bought one of each</p>
   </section>
   ${featured(deals)}
@@ -82,8 +111,8 @@ export function listView(deals, shown, st, total) {
       <li><strong>STRONG DEAL</strong> — a big, genuine cut, confirmed at two independent sources.</li>
       <li><strong>ROUTINE SALE</strong> — a small cut on a list price that barely moved. We list it so you can see what not to buy.</li>
     </ul>
-    <p>Every deal names the sources that showed its price, and the time it was checked. Prices move all day on Black Friday — always check the price at the store before you buy. Deals that failed a second check were left off this board entirely.</p>
-    <p class="sources"><strong>Sources checked 27 Nov 2026:</strong> ${SOURCES.map(escape).join("; ")}.</p>
+    <p>Every deal names the sources that showed its price, and the time it was checked. Prices move all day on Black Friday — always check the price at the store before you buy. Deals that failed a second check were left off this board entirely. Five prices from the 27 November board were corrected this morning after they moved overnight.</p>
+    <p class="sources"><strong>Sources checked 28 Nov 2026:</strong> ${SOURCES.map(escape).join("; ")}.</p>
   </section>`;
 }
 
@@ -95,7 +124,10 @@ export function dealView(d) {
       <span class="cat">${escape(d.cat)}</span>
       ${verdictPill(d)}
     </div>
-    <h1>${escape(d.title)}</h1>
+    <div class="detail-head">
+      ${artTile(d.cat, true)}
+      <h1>${escape(d.title)}</h1>
+    </div>
     <p class="price-row big">
       <span class="price">${usd(d.price)}</span>
       <s class="was">${usd(d.was)}</s>

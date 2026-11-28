@@ -8,9 +8,10 @@ Black Friday is full of “deals” that were never a deal: a list price raised 
 
 ## What it is
 
-- **38 deals** across 8 categories (audio, computers, TVs, wearables, gaming, kitchen, home, toys & fashion) at Amazon, Walmart, Best Buy and Target — every one checked twice on Friday 27 November 2026, 07:35–07:50 UTC.
-- **Honest verdicts.** 9 new lows, 27 strong deals, 2 routine sales. The routine ones stay on the board on purpose, so you can see what *not* to buy.
-- **Cross-store comparison.** 14 deals show the same product at another store, cheapest first, so the winner is obvious.
+- **56 deals** across 9 categories (audio, computers, TVs, wearables, gaming, kitchen, home, toys & fashion, phones) at Amazon, Walmart, Best Buy and Target — every one checked twice. New deals and all Apple/tech prices re-checked Saturday 28 November 2026, 04:20–04:40 UTC; the rest re-confirmed live the same morning. Five prices from the 27 November board were corrected after they moved overnight (MacBook Air 13 $1,049 → $999, MacBook Air 15 $1,199 → $1,249, MacBook Pro 14 $1,779 → $1,749, MacBook Neo $649 → $599, Watch Ultra 4 $699 → $649.99).
+- **Honest verdicts.** 15 new lows, 40 strong deals, 1 routine sale. The routine one stays on the board on purpose, so you can see what *not* to buy.
+- **Cross-store comparison.** 24 deals show the same product at another store, cheapest first, so the winner is obvious.
+- **Biggest-savings hero strip.** The three largest dollar savings lead the page — $1,700 off a 98-inch TV, $1,300 off a 65-inch OLED, $450 off a flagship phone — each with original category art.
 - **Working finder.** Search by name, filter by category, store and discount (30%+, 50%+, new lows only), sort by biggest saving, biggest % off, lowest price, or new lows first. Every deal opens a detail page with the full evidence, both sources named, and a cross-store price table.
 - **Phone layout.** The whole board works at 390 px wide.
 
@@ -33,7 +34,8 @@ node serve.ts            # app/ on http://localhost:8080
 node serve.ts --port 8083
 ```
 
-- `app/data.js` — the 38 deals, with both sources and the verdict evidence for each
+- `app/data.js` — the 56 deals, with both sources and the verdict evidence for each
+- `app/art.js` — original inline-SVG product art, one flat icon per category (no photos, no external images)
 - `app/format.js` — prices, percentages and store links
 - `app/filters.js` — search, category/store/discount filters, sorting
 - `app/compare.js` — the cross-store price table
@@ -48,21 +50,21 @@ Four real renders from headless Chrome, in `screenshots/`: the home page, the fi
 
 ## Sources
 
-Prices were read on 27 November 2026 from 9to5Mac Black Friday Day 6 & Day 7, Benzinga via TradingView, dealnews, Topsave, Yahoo Shopping, TrendThread, beebulletin, Tasting Table, Walmart.com, Tom's Guide, PhoneArena, Hip2Save, TheTrendMonitor and Target.com listings. The full source list is in `app/data.js`.
+Prices were read on 28 November 2026 from 9to5Mac + 9to5Toys Black Friday main-event pages, Cult of Mac, dealnews, The Shortcut, WIRED, FINCHANNEL, Benzinga via TradingView, beebulletin, TechBargains, DailyFox, Topsave, Yahoo Shopping, MacRumors, iClarified, Hot Hardware, Phandroid, Slickdeals, Walmart.com, Tom's Guide, PhoneArena, Hip2Save, TheTrendMonitor and Target.com listings. The full source list is in `app/data.js`.
 
 ## What the screenshots show
 
 The four screenshots in `screenshots/` are real renders from headless Chrome (see `tools/shoot.mjs`):
 
-1. `1-home.jpg` — the home page: 38 deals, 9 new lows, 4 stores, $4,708 total savings; the five lowest prices ever, then the finder with its search, category, store, discount and sort controls.
+1. `1-home.jpg` — the home page: 56 deals, 15 new lows, 4 stores, $10,141 total savings; the three biggest savings as a hero strip, then the finder with its search, category, store, discount and sort controls.
 2. `2-filtered.jpg` — the finder with Audio + 50% off or more applied, sorted by biggest % off: 6 deals, from 67% down to 53%.
 3. `3-deal.jpg` — one deal detail page (AirPods Pro 3): the price history behind the verdict, the cross-store table, the sources and the check time.
 4. `4-phone.jpg` — the same home page at 390 px wide.
 
 ## Verified locally
 
-- Two runs of `main.ts` produce byte-identical output (`diff -r` clean); dossier 563,489 bytes, total output under 1 MiB.
-- Search, category, store and discount filters and all four sorts checked against the data: “lego” finds 2 deals, Target lists 3, new-lows-only lists 9, cheapest first is the $15 LEGO set.
+- Two runs of `main.ts` produce byte-identical output (`diff -r` clean); total output 1.1 MiB.
+- Search, category, store and discount filters and all four sorts checked against the data: “lego” finds 2 deals, Target lists 3, new-lows-only lists 15, cheapest first is the $15 LEGO set, Phones lists 3, Kitchen lists 8.
 - Screenshots render with 0 page errors in headless Chrome.
 
 ## License
